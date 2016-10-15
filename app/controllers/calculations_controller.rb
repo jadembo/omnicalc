@@ -13,29 +13,30 @@ class CalculationsController < ApplicationController
 
     @character_count_with_spaces = @text.length
 
-
-    # removes spaces from text
-    sanitized_text = @text.gsub(" ","")
-
-    @character_count_without_spaces = sanitized_text.length
-
-    #================================================================================
-    #removes special word from text string - counts the number of characters removed from original text string
-    #divides by length of special word to get number of occurances
-    #================================================================================
-    text_without_special_word = @text.gsub(@special_word,"")
-    length_without_special_word = text_without_special_word.length.to_i
-    length_of_special_word = @special_word.length.to_i
-
-    @occurrences = ((@character_count_with_spaces.to_i - length_without_special_word) / length_of_special_word).to_i
-
-
     #split text into array of words
     word_array=@text.split
 
     @word_count = word_array.length
 
+    x = 0
+    character_count = 0
+    while x < word_array.length
+      current_word_length = word_array[x].length.to_i
+      character_count = character_count + current_word_length
+      x = x + 1
+    end
 
+    @character_count_without_spaces = character_count
+
+    #================================================================================
+    #removes special word from text string - counts the number of characters removed from original text string
+    #divides by length of special word to get number of occurances
+    #================================================================================
+    text_without_special_word = @text.downcase.gsub(@special_word.downcase,"")
+    length_without_special_word = text_without_special_word.length.to_i
+    length_of_special_word = @special_word.length.to_i
+
+    @occurrences = ((@character_count_with_spaces.to_i - length_without_special_word) / length_of_special_word).to_i
 
     # ================================================================================
     # Your code goes above.
@@ -87,12 +88,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = (@ending - @starting).to_f
+    @minutes = (@seconds / 60).to_f
+    @hours = (@minutes / 60).to_f
+    @days = (@hours / 24).to_f
+    @weeks = (@days / 7).to_f
+    @years = (@days / 365).to_f
 
     # ================================================================================
     # Your code goes above.
