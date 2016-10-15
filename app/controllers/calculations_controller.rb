@@ -127,6 +127,7 @@ class CalculationsController < ApplicationController
       end
 
     @median = median
+
       x = 0
       sum = 0
       while x < @count
@@ -134,17 +135,49 @@ class CalculationsController < ApplicationController
         x = x + 1
       end
 
-      
-
     @sum = sum
 
-    @mean = "Replace this string with your answer."
+    @mean = @sum / @count
 
-    @variance = "Replace this string with your answer."
+      x = 0
+      sum_of_variance = 0
+      while x < @count
+        sum_of_variance = (@numbers[x] - @mean)**2 + sum_of_variance
+        x = x + 1
+      end
 
-    @standard_deviation = "Replace this string with your answer."
+    @variance = sum_of_variance / @count
 
-    @mode = "Replace this string with your answer."
+    @standard_deviation = @variance**0.5
+
+      x = 0
+      count = 0
+      current_max_count = 0
+      current_mode = 0
+
+      while x < @count
+
+        y = x
+
+        while true
+          if @sorted_numbers [x] == @sorted_numbers [y]
+            count = count + 1
+          else
+            break
+          end
+          y= y+1
+        end
+
+        if count > current_max_count
+          current_max_count = count
+          current_mode = @sorted_numbers[x]
+        end
+
+        count = 0
+        x=x+1
+      end
+
+    @mode = current_mode
 
     # ================================================================================
     # Your code goes above.
