@@ -178,7 +178,7 @@ class CalculationsController < ApplicationController
       end
 
     @mode = current_mode
-
+#done
     # ================================================================================
     # Your code goes above.
     # ================================================================================
