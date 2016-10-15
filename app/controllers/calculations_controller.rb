@@ -11,13 +11,31 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
 
-    @word_count = "Replace this string with your answer."
+    # removes spaces from text
+    sanitized_text = @text.gsub(" ","")
 
-    @occurrences = "Replace this string with your answer."
+    @character_count_without_spaces = sanitized_text.length
+
+    #================================================================================
+    #removes special word from text string - counts the number of characters removed from original text string
+    #divides by length of special word to get number of occurances
+    #================================================================================
+    text_without_special_word = @text.gsub(@special_word,"")
+    length_without_special_word = text_without_special_word.length.to_i
+    length_of_special_word = @special_word.length.to_i
+
+    @occurrences = ((@character_count_with_spaces.to_i - length_without_special_word) / length_of_special_word).to_i
+
+
+    #split text into array of words
+    word_array=@text.split
+
+    @word_count = word_array.length
+
+
 
     # ================================================================================
     # Your code goes above.
